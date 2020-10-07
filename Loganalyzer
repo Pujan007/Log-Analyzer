@@ -1,0 +1,98 @@
+import numpy as np
+import numpy as np
+import matplotlib.pyplot as plt
+from termcolor import colored
+import re
+attackvaluesforchart=[]
+def search_function(stringtosearch):
+    with open('test.txt', "r") as fh:
+        fstring=fh.readlines()
+    linenumber=0
+    result=[]
+    extractword=[]
+    extracttime=[]
+    for line in fstring:
+        linenumber=linenumber+1
+        word = re.search(stringtosearch, line)
+        if(word):
+            i=fstring[linenumber-1]
+            extractword.append(i)
+    ip=[]
+    for i in extractword:
+        words = re.search(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', i)
+        ip.append(words.group())
+    dictOfElements = dict()
+    for element in ip:
+        if element in dictOfElements:
+            dictOfElements[element] += 1
+        else:
+            dictOfElements[element] = 1
+    dictOfElements = {key: value for key, value in dictOfElements.items() if value > 0}
+    temp=0
+    for key, value in dictOfElements.items():
+        print("\t",colored(key,"red"), ' :: ', colored(value,"yellow")," ")
+        
+with open('./test.txt', "r") as fh:
+    fstring=fh.readlines()
+lst=[]
+for line in fstring:
+    word = re.search(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', line)
+    word=word.group()
+    lst.append(word)
+dictOfElems = dict()
+for elem in lst:
+    if elem in dictOfElems:
+        dictOfElems[elem] += 1
+    else:
+        dictOfElems[elem] = 1
+dictOfElems = {key: value for key, value in dictOfElems.items() if value > 0}
+total=0
+ipchart=[]
+ipnames=[]
+for key, value in dictOfElems.items():
+        total=total+value
+for key, value in dictOfElems.items():  
+        per=value/total
+        ipchart.append(per*100)
+        print(colored(key,"red") , ' : ', colored(value,"green"),' : ',colored(per*100,"yellow") ,colored('%',"yellow")) 
+        ipnames.append(key)
+my_circle=plt.Circle( (0,0), 0.7, color='white')
+plt.pie(ipchart, labels=ipnames, wedgeprops = { 'linewidth' : 7, 'edgecolor' : 'white' })
+p=plt.gcf()
+plt.show()
+print("")
+print(" 1 : SQL Injection")
+print(" 2 : Directory traversal attack")
+print(" 3 : Cross site scripting (XSS)")
+print(" 4 : Password finding attempt")
+print(" 5 : For all")
+
+print("\nOutput for SQL Injection attacks are as follow...\n")
+print("sleep based attacks")
+search_function("sleep")
+print("select based attacks")
+search_function("select")
+print("\nOutput for directory traversal attacks are as follow...\n")
+search_function("../../../")
+print("\nOutput for XSS attacks are as follow...\n")
+print("Alert based XSS")
+search_function("alert")
+print("Prompt based XSS")
+search_function("prompt")
+print("\nOutput for password finding attacks are as follow...\n")
+search_function("etc/passwd")
+print("\nOutput for SQL Injection attacks are as follow...\n")
+print("sleep based attacks")
+search_function("sleep")
+print("select based attacks")
+search_function("select")
+print("\nOutput for directory traversal attacks are as follow...\n")
+search_function("../../../")
+print("\nOutput for XSS attacks are as follow...\n")
+print("Alert based XSS")
+search_function("alert")
+print("Prompt based XSS")
+search_function("prompt")
+print("\nOutput for password finding attacks are as follow...\n")
+search_function("etc/passwd")
+plt.pie(ipchart)
